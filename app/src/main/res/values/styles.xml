@@ -18,4 +18,7 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
 
+    <style name="ButtonTextAppearance" parent="TextAppearance.AppCompat.Widget.Button">
+        <item name="android:fontFamily">casual</item>
+    </style>
 </resources>

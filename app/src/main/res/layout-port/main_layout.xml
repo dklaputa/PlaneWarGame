@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -92,23 +93,25 @@
 
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/skillBtn1"
-                android:layout_width="wrap_content"
+                android:layout_width="96dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="40dp"
                 android:shadowColor="#333"
                 android:shadowRadius="4"
                 android:text="@string/skill1"
-                android:textColor="#eee" />
+                android:textAppearance="@style/ButtonTextAppearance"
+                android:textColor="#eee"/>
 
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/skillBtn2"
-                android:layout_width="wrap_content"
+                android:layout_width="96dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="40dp"
                 android:shadowColor="#333"
                 android:shadowRadius="4"
                 android:text="@string/skill2"
-                android:textColor="#eee" />
+                android:textAppearance="@style/ButtonTextAppearance"
+                android:textColor="#eee"/>
 
         </LinearLayout>
 

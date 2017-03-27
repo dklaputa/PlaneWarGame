@@ -10,10 +10,12 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.Display;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -67,13 +69,15 @@ public class MainActivity extends AppCompatActivity {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
         dbu = new DBUtils(this, "data.db3", 1);
-        Cursor c = dbu.getReadableDatabase().rawQuery("select top_score,name from data", null);//.getInt(0);
+        Cursor c = dbu.getReadableDatabase().rawQuery("select top_score,name from data", null);//
+        // .getInt(0);
         c.moveToNext();
         topScore = c.getInt(0);
         name = c.getString(1);
         c.close();
         //	requestWindowFeature(Window.FEATURE_NO_TITLE);
-        //	getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams
+        //	getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager
+        // .LayoutParams
         // .FLAG_FULLSCREEN);
         WindowManager windowManager = getWindowManager();
         Display display = windowManager.getDefaultDisplay();
@@ -93,12 +97,14 @@ public class MainActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.menu_highest_score:
                         if (name != null) {
-                            new AlertDialog.Builder(MainActivity.this).setMessage("Highest score : " + topScore + " " +
+                            new AlertDialog.Builder(MainActivity.this).setMessage("Highest score " +
+                                    ": " + topScore + " " +
                                     "by " + name)//
                                     // .setNegativeButton(null, null)
                                     .create().show();
                         } else {
-                            new AlertDialog.Builder(MainActivity.this).setMessage("No highest score!")//
+                            new AlertDialog.Builder(MainActivity.this).setMessage("No highest " +
+                                    "score!")//
                                     // .setNegativeButton(null, null)
                                     .create().show();
                         }
@@ -112,7 +118,8 @@ public class MainActivity extends AppCompatActivity {
                         } catch (PackageManager.NameNotFoundException e) {
                             e.printStackTrace();
                         }
-                        new AlertDialog.Builder(MainActivity.this).setMessage("Built by DK ZHOU\n2014/2/7 Ver: " +
+                        new AlertDialog.Builder(MainActivity.this).setMessage("Built by DK " +
+                                "ZHOU\n2014/2/7 Ver: " +
                                 version + "\nHave fun ;)")
                                 // .setNegativeButton(null, null)
                                 .create().show();
@@ -175,6 +182,8 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+        ViewCompat.setElevation(rl, TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16,
+                getResources().getDisplayMetrics()));
         AppCompatButton skillBtn1 = (AppCompatButton) findViewById(R.id.skillBtn1);
         skillBtn1.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
@@ -187,8 +196,8 @@ public class MainActivity extends AppCompatActivity {
                 myplane.superSkill2();
             }
         });
-        skillBtn1.setSupportBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#329c8f")));
-        skillBtn2.setSupportBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#329c8f")));
+//        skillBtn1.setSupportBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#329c8f")));
+//        skillBtn2.setSupportBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#329c8f")));
         ImageView filter = (ImageView) findViewById(R.id.imageView);
         gp = filter.getLayoutParams();
         gp.width = maxSize;
@@ -202,8 +211,10 @@ public class MainActivity extends AppCompatActivity {
 //                | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
 //                | View.SYSTEM_UI_FLAG_IMMERSIVE);
 //        try {
-//            //	getWindow().addFlags(WindowManager.LayoutParams.class.getField("FLAG_FULLSCREEN").getInt(null));
-//            getWindow().addFlags(WindowManager.LayoutParams.class.getField("FLAG_NEEDS_MENU_KEY").getInt(null));
+//            //	getWindow().addFlags(WindowManager.LayoutParams.class.getField
+// ("FLAG_FULLSCREEN").getInt(null));
+//            getWindow().addFlags(WindowManager.LayoutParams.class.getField
+// ("FLAG_NEEDS_MENU_KEY").getInt(null));
 //        } catch (IllegalAccessException | IllegalArgumentException | NoSuchFieldException e) {
 //            // TODO Auto-generated catch block
 //            e.printStackTrace();
@@ -226,17 +237,20 @@ public class MainActivity extends AppCompatActivity {
 //        switch (mi.getItemId()) {
 //            case 0:
 //                if (name != null) {
-//                    new AlertDialog.Builder(this).setMessage("Highest score : " + topScore + " by " + name)//
+//                    new AlertDialog.Builder(this).setMessage("Highest score : " + topScore + "
+// by " + name)//
 //							// .setNegativeButton(null, null)
 //                            .create().show();
 //                } else {
-//                    new AlertDialog.Builder(this).setMessage("No highest score!")//.setNegativeButton(null, null)
+//                    new AlertDialog.Builder(this).setMessage("No highest score!")//
+// .setNegativeButton(null, null)
 //                            .create().show();
 //                }
 //                break;
 //            case 1:
 //                //		System.out.println("1");
-//                new AlertDialog.Builder(this).setMessage("Author : DK zhou\n2014/2/7 Ver : 1.2\nJust for fun :)")//
+//                new AlertDialog.Builder(this).setMessage("Author : DK zhou\n2014/2/7 Ver :
+// 1.2\nJust for fun :)")//
 //						// .setNegativeButton(null, null)
 //                        .create().show();
 //                break;
@@ -266,16 +280,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void updateHighScore() {
-        final LinearLayout l = (LinearLayout) getLayoutInflater().inflate(R.layout.update_score, null);
+        final LinearLayout l = (LinearLayout) getLayoutInflater().inflate(R.layout.update_score,
+                null);
         AlertDialog dialog = new AlertDialog.Builder(this)
                 .setView(l)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface arg0, int arg1) {
-                        String yourName = ((EditText) l.findViewById(R.id.nameText)).getText().toString();
+                        String yourName = ((EditText) l.findViewById(R.id.nameText)).getText()
+                                .toString();
                         if (yourName.length() == 0) yourName = "Anonymity";
-                        dbu.getReadableDatabase().execSQL("update data set top_score = ?,name=?", new String[]{score
-                                + "", yourName});
+                        dbu.getReadableDatabase().execSQL("update data set top_score = ?,name=?",
+                                new String[]{score
+                                        + "", yourName});
                         topScore = score;
                         name = yourName;
                     }
@@ -330,28 +347,37 @@ public class MainActivity extends AppCompatActivity {
 
         public void run() {
             //	if(TouchEnable){
-            if ((touchX / (Pixel.d + Pixel.size) < myplane.x) && (touchY / (Pixel.d + Pixel.size) - 1 < myplane.y))
+            if ((touchX / (Pixel.d + Pixel.size) < myplane.x) && (touchY / (Pixel.d + Pixel.size)
+                    - 1 < myplane.y))
                 orientation = 4;
-            else if ((touchX / (Pixel.d + Pixel.size) < myplane.x) && (touchY / (Pixel.d + Pixel.size) - 1 > myplane.y))
+            else if ((touchX / (Pixel.d + Pixel.size) < myplane.x) && (touchY / (Pixel.d + Pixel
+                    .size) - 1 > myplane.y))
                 orientation = 7;
-            else if ((touchX / (Pixel.d + Pixel.size) > myplane.x) && (touchY / (Pixel.d + Pixel.size) - 1 < myplane.y))
+            else if ((touchX / (Pixel.d + Pixel.size) > myplane.x) && (touchY / (Pixel.d + Pixel
+                    .size) - 1 < myplane.y))
                 orientation = 5;
-            else if ((touchX / (Pixel.d + Pixel.size) > myplane.x) && (touchY / (Pixel.d + Pixel.size) - 1 > myplane.y))
+            else if ((touchX / (Pixel.d + Pixel.size) > myplane.x) && (touchY / (Pixel.d + Pixel
+                    .size) - 1 > myplane.y))
                 orientation = 6;
-            else if ((touchX / (Pixel.d + Pixel.size) < myplane.x) && (touchY / (Pixel.d + Pixel.size) - 1 == myplane
+            else if ((touchX / (Pixel.d + Pixel.size) < myplane.x) && (touchY / (Pixel.d + Pixel
+                    .size) - 1 == myplane
                     .y))
                 orientation = 0;
-            else if ((touchX / (Pixel.d + Pixel.size) == myplane.x) && (touchY / (Pixel.d + Pixel.size) - 1 < myplane
+            else if ((touchX / (Pixel.d + Pixel.size) == myplane.x) && (touchY / (Pixel.d + Pixel
+                    .size) - 1 < myplane
                     .y))
                 orientation = 2;
-            else if ((touchX / (Pixel.d + Pixel.size) > myplane.x) && (touchY / (Pixel.d + Pixel.size) - 1 == myplane
+            else if ((touchX / (Pixel.d + Pixel.size) > myplane.x) && (touchY / (Pixel.d + Pixel
+                    .size) - 1 == myplane
                     .y))
                 orientation = 1;
-            else if ((touchX / (Pixel.d + Pixel.size) == myplane.x) && (touchY / (Pixel.d + Pixel.size) - 1 > myplane
+            else if ((touchX / (Pixel.d + Pixel.size) == myplane.x) && (touchY / (Pixel.d + Pixel
+                    .size) - 1 > myplane
                     .y))
                 orientation = 3;
             else orientation = 8;
-            //	System.out.println(orientation+","+myplane.x+","+myplane.y+","+(touchX/alpha-32)/11+","+
+            //	System.out.println(orientation+","+myplane.x+","+myplane.y+","+(touchX/alpha-32)
+            // /11+","+
             // (touchY/alpha-32)/11);
             //		}
 
@@ -362,8 +388,10 @@ public class MainActivity extends AppCompatActivity {
             }
             if (i % 20 == 0 && !bossIsOn) {
                 i = 0;
-                if (new Random().nextInt(10) > 5) enemy.add(new Enemy1(new Random().nextInt(23) + 1, -1));
-                else if (new Random().nextInt(10) > 2) enemy.add(new Enemy3(new Random().nextInt(23) + 1, -1));
+                if (new Random().nextInt(10) > 5)
+                    enemy.add(new Enemy1(new Random().nextInt(23) + 1, -1));
+                else if (new Random().nextInt(10) > 2)
+                    enemy.add(new Enemy3(new Random().nextInt(23) + 1, -1));
                 else {
                     enemy.add(new Enemy2(8, -1));
                     enemy.add(new Enemy2(16, -1));

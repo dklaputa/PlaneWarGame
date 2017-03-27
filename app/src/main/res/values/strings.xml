@@ -3,7 +3,7 @@
 
     <string name="app_name">Thunder</string>
     <string name="action_settings">Settings</string>
-    <string name="skill1">Missiles\n- 100</string>
-    <string name="skill2">Power up\n- 100</string>
+    <string name="skill1">Missiles</string>
+    <string name="skill2">Power</string>
 
 </resources>

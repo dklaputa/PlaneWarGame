@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.myGame.thunder"
-        minSdkVersion 9
+        minSdkVersion 16
         targetSdkVersion 25
     }
 
