@@ -6,7 +6,7 @@ You have two kinds of skills.
 - "Missiles": Tracking missiles
 - "Power": Full force
 
-Each skill will cost you 100 point, you can get int by killing the enemy.
+Each skill will cost you 100 points, you can get point by killing the enemy.
 
 Some screenshots:
 
