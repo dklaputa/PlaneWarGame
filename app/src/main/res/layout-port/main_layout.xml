@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/bg">
+    </ImageView>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical|center_horizontal"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"/>
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#F9F0B1">
+
+            <com.myGame.thunder.MainViewBg
+                android:id="@+id/mainViewBg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"/>
+
+            <com.myGame.thunder.ScoreViewBg
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/mainViewBg"
+                android:layout_alignRight="@+id/mainViewBg"
+                android:layout_marginBottom="6dp"/>
+
+            <com.myGame.thunder.ScoreViewBg
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignRight="@+id/mainViewBg"
+                android:layout_below="@+id/mainViewBg"
+                android:layout_marginTop="6dp"/>
+
+            <com.myGame.thunder.MainView
+                android:id="@+id/mainView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"/>
+
+            <com.myGame.thunder.ScoreView
+                android:id="@+id/scoreView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/mainView"
+                android:layout_alignRight="@+id/mainView"
+                android:layout_marginBottom="6dp"/>
+
+            <com.myGame.thunder.RoundView
+                android:id="@+id/roundView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignRight="@+id/mainView"
+                android:layout_below="@+id/mainView"
+                android:layout_marginTop="6dp"/>
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/filter"/>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center_horizontal">
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/skillBtn1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="40dp"
+                android:shadowColor="#333"
+                android:shadowRadius="4"
+                android:text="@string/skill1"
+                android:textColor="#eee" />
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/skillBtn2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:shadowColor="#333"
+                android:shadowRadius="4"
+                android:text="@string/skill2"
+                android:textColor="#eee" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>
