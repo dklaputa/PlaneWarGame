@@ -25,8 +25,8 @@ public class MyPlane extends Plane {
 			MainActivity.bullets.add(new Bullet(x,y,0));
 			MainActivity.bullets.add(new Bullet(x,y,1));*/
             MainActivity.bullets.add(new Bullet(x, y, 2));
-            if (count % 4 == 0) MainActivity.bullets.add(new Bullet(x + 4, y + 1, 9));
-            if (count % 4 == 2) MainActivity.bullets.add(new Bullet(x - 4, y + 1, 9));
+            if (count % 4 == 0) MainActivity.bullets.add(new Bullet(x + 4, y + 1, Bullet.TYPE_MISSILE_PLAYER));
+            if (count % 4 == 2) MainActivity.bullets.add(new Bullet(x - 4, y + 1, Bullet.TYPE_MISSILE_PLAYER));
             if (count == 100) {
                 superSkill1 = false;
                 status = 0;
@@ -34,21 +34,21 @@ public class MyPlane extends Plane {
             } else count++;
         } else if (superSkill2) {
             status = 1;
-            MainActivity.bullets.add(new Bullet(x + 4, y + 1, 4));
-            MainActivity.bullets.add(new Bullet(x + 4, y + 1, 5));
-            MainActivity.bullets.add(new Bullet(x + 4, y + 1, 1));
-            MainActivity.bullets.add(new Bullet(x + 4, y + 1, 2));
-            MainActivity.bullets.add(new Bullet(x - 4, y + 1, 4));
-            MainActivity.bullets.add(new Bullet(x - 4, y + 1, 5));
-            MainActivity.bullets.add(new Bullet(x - 4, y + 1, 0));
-            MainActivity.bullets.add(new Bullet(x - 4, y + 1, 2));
-            MainActivity.bullets.add(new Bullet(x, y, 2));
+            MainActivity.bullets.add(new Bullet(x + 4, y + 1, Orientation.LEFTUP));
+            MainActivity.bullets.add(new Bullet(x + 4, y + 1, Orientation.RIGHTUP));
+            MainActivity.bullets.add(new Bullet(x + 4, y + 1, Orientation.RIGHT));
+            MainActivity.bullets.add(new Bullet(x + 4, y + 1, Orientation.UP));
+            MainActivity.bullets.add(new Bullet(x - 4, y + 1, Orientation.LEFTUP));
+            MainActivity.bullets.add(new Bullet(x - 4, y + 1, Orientation.RIGHTUP));
+            MainActivity.bullets.add(new Bullet(x - 4, y + 1, Orientation.LEFT));
+            MainActivity.bullets.add(new Bullet(x - 4, y + 1, Orientation.UP));
+            MainActivity.bullets.add(new Bullet(x, y, Orientation.UP));
             if (count == 100) {
                 superSkill2 = false;
                 status = 0;
                 count = 0;
             } else count++;
-        } else MainActivity.bullets.add(new Bullet(x, y, 2));
+        } else MainActivity.bullets.add(new Bullet(x, y, Orientation.UP));
     }
 
     public void superSkill1() {

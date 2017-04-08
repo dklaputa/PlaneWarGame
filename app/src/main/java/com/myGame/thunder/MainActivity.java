@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     int maxSize;
     static float alpha;
     static MyPlane myplane = new MyPlane();
-    static ArrayList<Boss> boss = new ArrayList<>();
+    static Boss boss;
     static ArrayList<Bullet> bullets = new ArrayList<>();
     static ArrayList<Enemy> enemy = new ArrayList<>();
     static ArrayList<Bullet> enemy_bullets = new ArrayList<>();
@@ -166,11 +166,11 @@ public class MainActivity extends AppCompatActivity {
                             startGame();
                         } else if (gameover) startGame();
                         else if (paused) {
-                            int i = task.i;
-                            int j = task.j;
+                            int count = task.count;
+                            int countBoss = task.countBoss;
                             //	timer=new Timer();
-                            task = new RefreshThread(i, j);
-                            timer.scheduleAtFixedRate(task, 0, 40);
+                            task = new RefreshThread(count, countBoss);
+                            timer.scheduleAtFixedRate(task, 0, 1000/60);
                             paused = false;
 
                         }
@@ -196,8 +196,10 @@ public class MainActivity extends AppCompatActivity {
                 myplane.superSkill2();
             }
         });
-//        skillBtn1.setSupportBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#329c8f")));
-//        skillBtn2.setSupportBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#329c8f")));
+//        skillBtn1.setSupportBackgroundTintList(ColorStateList.valueOf(Color.parseColor
+// ("#329c8f")));
+//        skillBtn2.setSupportBackgroundTintList(ColorStateList.valueOf(Color.parseColor
+// ("#329c8f")));
         ImageView filter = (ImageView) findViewById(R.id.imageView);
         gp = filter.getLayoutParams();
         gp.width = maxSize;
@@ -266,7 +268,7 @@ public class MainActivity extends AppCompatActivity {
         bullets = new ArrayList<>();
         enemy = new ArrayList<>();
         enemy_bullets = new ArrayList<>();
-        boss = new ArrayList<>();
+        boss = null;
         paused = false;
         gameover = false;
         bossIsOn = false;
@@ -275,7 +277,7 @@ public class MainActivity extends AppCompatActivity {
         //	TouchEnable=false;
 
         task = new RefreshThread(0, 1);
-        timer.scheduleAtFixedRate(task, 0, 40);
+        timer.scheduleAtFixedRate(task, 0, 1000 / 60);
 
     }
 
@@ -337,105 +339,84 @@ public class MainActivity extends AppCompatActivity {
     }
 
     class RefreshThread extends TimerTask {
-        int i;
-        int j;
+        int count;
+        int countBoss;
 
-        public RefreshThread(int i, int j) {
-            this.i = i;
-            this.j = j;
+        public RefreshThread(int count, int countBoss) {
+            this.count = count;
+            this.countBoss = countBoss;
         }
 
         public void run() {
             //	if(TouchEnable){
             if ((touchX / (Pixel.d + Pixel.size) < myplane.x) && (touchY / (Pixel.d + Pixel.size)
                     - 1 < myplane.y))
-                orientation = 4;
+                orientation = Orientation.LEFTUP;
             else if ((touchX / (Pixel.d + Pixel.size) < myplane.x) && (touchY / (Pixel.d + Pixel
                     .size) - 1 > myplane.y))
-                orientation = 7;
+                orientation = Orientation.LEFTDOWN;
             else if ((touchX / (Pixel.d + Pixel.size) > myplane.x) && (touchY / (Pixel.d + Pixel
                     .size) - 1 < myplane.y))
-                orientation = 5;
+                orientation = Orientation.RIGHTUP;
             else if ((touchX / (Pixel.d + Pixel.size) > myplane.x) && (touchY / (Pixel.d + Pixel
                     .size) - 1 > myplane.y))
-                orientation = 6;
+                orientation = Orientation.RIGHTDOWN;
             else if ((touchX / (Pixel.d + Pixel.size) < myplane.x) && (touchY / (Pixel.d + Pixel
                     .size) - 1 == myplane
                     .y))
-                orientation = 0;
+                orientation = Orientation.LEFT;
             else if ((touchX / (Pixel.d + Pixel.size) == myplane.x) && (touchY / (Pixel.d + Pixel
                     .size) - 1 < myplane
                     .y))
-                orientation = 2;
+                orientation = Orientation.UP;
             else if ((touchX / (Pixel.d + Pixel.size) > myplane.x) && (touchY / (Pixel.d + Pixel
                     .size) - 1 == myplane
                     .y))
-                orientation = 1;
+                orientation = Orientation.RIGHT;
             else if ((touchX / (Pixel.d + Pixel.size) == myplane.x) && (touchY / (Pixel.d + Pixel
                     .size) - 1 > myplane
                     .y))
-                orientation = 3;
-            else orientation = 8;
-            //	System.out.println(orientation+","+myplane.x+","+myplane.y+","+(touchX/alpha-32)
-            // /11+","+
-            // (touchY/alpha-32)/11);
-            //		}
-
-            if (j % 500 == 0) {
-                boss.add(new Boss1(12, -3));
-                bossIsOn = true;
-                j++;
+                orientation = Orientation.DOWN;
+            else orientation = Orientation.STOP;
+            if (orientation != Orientation.STOP) {
+                myplane.move(orientation);
+                orientation = Orientation.STOP;
             }
-            if (i % 20 == 0 && !bossIsOn) {
-                i = 0;
-                if (new Random().nextInt(10) > 5)
+
+            if (countBoss == 1200) {
+                bossIsOn = true;
+                countBoss = 0;
+            }
+            if (bossIsOn && boss == null && enemy.isEmpty()) {
+                boss = new Boss1(12, -3);
+            }
+            if (count % 60 == 0 && !bossIsOn) {
+                count = 0;
+                int r = new Random().nextInt(10);
+                if (r > 5)
                     enemy.add(new Enemy1(new Random().nextInt(23) + 1, -1));
-                else if (new Random().nextInt(10) > 2)
+                else if (r > 1)
                     enemy.add(new Enemy3(new Random().nextInt(23) + 1, -1));
                 else {
                     enemy.add(new Enemy2(8, -1));
                     enemy.add(new Enemy2(16, -1));
                 }
             }
-            //		if(i%1==0){
-            if (orientation != 8) {
-                myplane.move(orientation);
-                orientation = 8;
-            }
-            //	}
-            if (i % 5 == 0) {
+            if (count % 10 == 0) {
                 myplane.shoot();
-                for (int i = 0; i < boss.size(); i++) {
-                    boss.get(0).next();
-                }
             }
-
-
-            for (int m = 0; m < bullets.size(); m++) {
-                bullets.get(m).next();
-                if (!bullets.get(m).isAlive()) {
-                    bullets.remove(m);
-                    m--;
-                }
-            }
-            for (int m = 0; m < enemy_bullets.size(); m++) {
-                if (i % 2 == 0) {
-                    enemy_bullets.get(m).next();
-                }
-                if (!enemy_bullets.get(m).isAlive()) {
-                    enemy_bullets.remove(m);
-                    m--;
-                }
-            }
-            for (int m = 0; m < enemy.size(); m++) {
-                if (i % 5 == 0) {
+            if (count % 15 == 0) {
+                for (int m = 0; m < enemy.size(); m++) {
                     enemy.get(m).next();
+                    if (!enemy.get(m).isAlive()) {
+                        enemy.remove(m);
+                        m--;
+                    }
                 }
-                if (!enemy.get(m).isAlive()) {
-                    enemy.remove(m);
-                    m--;
-                    continue;
-                }
+                if (boss != null) boss.next();
+            }
+            //============================================
+            for (int m = 0; m < enemy.size(); m++) {
                 int n = enemy.get(m).isShot(bullets);
                 if (n != -1) {
                     bullets.remove(n);
@@ -444,30 +425,78 @@ public class MainActivity extends AppCompatActivity {
                     m--;
                 }
             }
-
-            i++;
-            if (bossIsOn) {
-                if (boss.get(0).dead) {
-                    bossIsOn = false;
-                    boss.remove(0);
-                    j++;
-                } else {
-                    int n = boss.get(0).isShot(bullets);
-                    if (n != -1) {
-                        bullets.remove(n);
-                        boss.get(0).getHurt();
+            if (boss != null) {
+                int n = boss.isShot(bullets);
+                if (n != -1) {
+                    bullets.remove(n);
+                    boss.getHurt();
+                    if (boss.dead) {
+                        bossIsOn = false;
+                        boss = null;
                     }
                 }
-            } else j++;
+            }
+            for (int m = 0; m < bullets.size(); m++) {
+                bullets.get(m).next();
+                if (!bullets.get(m).isAlive()) {
+                    bullets.remove(m);
+                    m--;
+                }
+            }
+            for (int m = 0; m < enemy.size(); m++) {
+                int n = enemy.get(m).isShot(bullets);
+                if (n != -1) {
+                    bullets.remove(n);
+                    score += 5;
+                    enemy.remove(m);
+                    m--;
+                }
+            }
+            if (boss != null) {
+                int n = boss.isShot(bullets);
+                if (n != -1) {
+                    bullets.remove(n);
+                    boss.getHurt();
+                    if (boss.dead) {
+                        bossIsOn = false;
+                        boss = null;
+                    }
+                }
+            }
+            //================================================
             if (myplane.isShot(enemy_bullets) != -1) {
                 gameover = true;
-                //		status=2;
+                handler.sendEmptyMessage(0x000);
                 if (score > topScore) {
                     handler.sendEmptyMessage(0x001);
                 }
+                this.cancel();
+                return;
             }
+            if (count % 4 == 0) {
+                for (int m = 0; m < enemy_bullets.size(); m++) {
+
+                    enemy_bullets.get(m).next();
+                    if (!enemy_bullets.get(m).isAlive()) {
+                        enemy_bullets.remove(m);
+                        m--;
+                    }
+                }
+                if (myplane.isShot(enemy_bullets) != -1) {
+                    gameover = true;
+                    handler.sendEmptyMessage(0x000);
+                    if (score > topScore) {
+                        handler.sendEmptyMessage(0x001);
+                    }
+                    this.cancel();
+                    return;
+                }
+            }
+
+            count++;
+            if (!bossIsOn) countBoss++;
+
             handler.sendEmptyMessage(0x000);
-            if (gameover) this.cancel();
         }
     }
 

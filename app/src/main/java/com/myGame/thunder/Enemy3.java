@@ -11,16 +11,16 @@ public class Enemy3 extends Enemy {
     }
 
     public void shoot() {
-        MainActivity.enemy_bullets.add(new Bullet(x, y, 3));
+        MainActivity.enemy_bullets.add(new Bullet(x, y, Bullet.TYPE_DOWN));
     }
 
     @Override
     public void next() {
         // TODO Auto-generated method stub
-        if (MainActivity.myplane.x < x) move(7);
-        else if (MainActivity.myplane.x > x) move(6);
-        else if (MainActivity.myplane.x == x) move(3);
-        if (count == 3) {
+        if (MainActivity.myplane.x < x) move(Orientation.LEFTDOWN);
+        else if (MainActivity.myplane.x > x) move(Orientation.RIGHTDOWN);
+        else if (MainActivity.myplane.x == x) move(Orientation.DOWN);
+        if (count == 2) {
             shoot();
             count = 0;
         } else count++;
@@ -29,7 +29,8 @@ public class Enemy3 extends Enemy {
     @Override
     public void refreshPixels() {
         // TODO Auto-generated method stub
-        plane = new Pixel[]{new Pixel(x - 1, y - 1), new Pixel(x, y - 1), new Pixel(x + 1, y - 1), new Pixel(x, y)};
+        plane = new Pixel[]{new Pixel(x - 1, y - 1), new Pixel(x, y - 1), new Pixel(x + 1, y - 1)
+                , new Pixel(x, y)};
     }
 
 }

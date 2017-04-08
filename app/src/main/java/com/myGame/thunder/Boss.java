@@ -2,6 +2,8 @@ package com.myGame.thunder;
 
 import java.util.ArrayList;
 
+import static com.myGame.thunder.Orientation.*;
+
 public abstract class Boss {
     int x;
     int y;
@@ -9,6 +11,7 @@ public abstract class Boss {
     Pixel[][] plane;
     int[] life;
     int[] totalLife;
+    int count;
     int ImmuneTime;
     int statusNumMax;
     int status = 0;
@@ -32,38 +35,38 @@ public abstract class Boss {
 
     public void move(int orientation) {
         switch (orientation) {
-            case 0:
+            case LEFT:
                 x--;
                 refreshPixels();
                 break;
-            case 1:
+            case RIGHT:
                 x++;
                 refreshPixels();
                 break;
-            case 2:
+            case UP:
                 y--;
                 refreshPixels();
                 break;
-            case 3:
+            case DOWN:
                 y++;
                 refreshPixels();
                 break;
-            case 4:
+            case LEFTUP:
                 x--;
                 y--;
                 refreshPixels();
                 break;
-            case 5:
+            case RIGHTUP:
                 x++;
                 y--;
                 refreshPixels();
                 break;
-            case 6:
+            case RIGHTDOWN:
                 x++;
                 y++;
                 refreshPixels();
                 break;
-            case 7:
+            case LEFTDOWN:
                 x--;
                 y++;
                 refreshPixels();
@@ -77,6 +80,7 @@ public abstract class Boss {
         }
         if (life[status] <= 0 && status < statusNumMax) {
             status++;
+            count = 0;
             MainActivity.score += 50;
         } else if (life[status] <= 0 && status == statusNumMax) {
             dead = true;
@@ -88,7 +92,8 @@ public abstract class Boss {
     public int isShot(ArrayList<Bullet> bullets) {
         for (int i = 0; i < plane[status].length; i++) {
             for (int j = 0; j < bullets.size(); j++) {
-                if ((bullets.get(j).x == plane[status][i].x) && (bullets.get(j).y == plane[status][i].y)) {
+                if ((bullets.get(j).x == plane[status][i].x) && (bullets.get(j).y ==
+                        plane[status][i].y)) {
                     return j;
                 }
             }

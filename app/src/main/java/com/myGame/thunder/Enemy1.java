@@ -11,14 +11,14 @@ public class Enemy1 extends Enemy {
     }
 
     public void shoot() {
-        MainActivity.enemy_bullets.add(new Bullet(x, y, 3));
+        MainActivity.enemy_bullets.add(new Bullet(x, y, Bullet.TYPE_AIM_ENEMY));
     }
 
     @Override
     public void next() {
         // TODO Auto-generated method stub
-        move(3);
-        if (count == 3) {
+        move(Orientation.DOWN);
+        if (count == 2) {
             shoot();
             count = 0;
         } else count++;

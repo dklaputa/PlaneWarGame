@@ -16,24 +16,27 @@ public class Enemy2 extends Enemy {
     }
 
     public void shoot() {
-        MainActivity.enemy_bullets.add(new Bullet(x, y, 0));
-        MainActivity.enemy_bullets.add(new Bullet(x, y, 1));
-        MainActivity.enemy_bullets.add(new Bullet(x, y, 2));
-        MainActivity.enemy_bullets.add(new Bullet(x, y, 3));
-        MainActivity.enemy_bullets.add(new Bullet(x, y, 4));
-        MainActivity.enemy_bullets.add(new Bullet(x, y, 5));
-        MainActivity.enemy_bullets.add(new Bullet(x, y, 6));
-        MainActivity.enemy_bullets.add(new Bullet(x, y, 7));
+        MainActivity.enemy_bullets.add(new Bullet(x, y, Bullet.TYPE_LEFT));
+        MainActivity.enemy_bullets.add(new Bullet(x, y, Bullet.TYPE_RIGHT));
+        MainActivity.enemy_bullets.add(new Bullet(x, y, Bullet.TYPE_UP));
+        MainActivity.enemy_bullets.add(new Bullet(x, y, Bullet.TYPE_DOWN));
+        MainActivity.enemy_bullets.add(new Bullet(x, y, Bullet.TYPE_LEFTUP));
+        MainActivity.enemy_bullets.add(new Bullet(x, y, Bullet.TYPE_RIGHTUP));
+        MainActivity.enemy_bullets.add(new Bullet(x, y, Bullet.TYPE_RIGHTDOWN));
+        MainActivity.enemy_bullets.add(new Bullet(x, y, Bullet.TYPE_LEFTDOWN));
     }
 
     @Override
     public void next() {
         // TODO Auto-generated method stub
-        if (count < 10) move(3);
-        else if (count == 10) shoot();
-        else {
+        if (count < 10) {
+            move(Orientation.DOWN);
+            if (count == 5) shoot();
+        } else if (count == 10) {
+            shoot();
             status = 1;
-            move(2);
+        } else {
+            move(Orientation.UP);
         }
         count++;
     }
@@ -46,8 +49,10 @@ public class Enemy2 extends Enemy {
     @Override
     public void refreshPixels() {
         // TODO Auto-generated method stub
-        plane[0] = new Pixel[]{new Pixel(x - 1, y - 1), new Pixel(x, y - 1), new Pixel(x + 1, y - 1), new Pixel(x, y)};
-        plane[1] = new Pixel[]{new Pixel(x - 1, y + 1), new Pixel(x, y + 1), new Pixel(x + 1, y + 1), new Pixel(x, y)};
+        plane[0] = new Pixel[]{new Pixel(x - 1, y - 1), new Pixel(x, y - 1), new Pixel(x + 1, y -
+                1), new Pixel(x, y)};
+        plane[1] = new Pixel[]{new Pixel(x - 1, y + 1), new Pixel(x, y + 1), new Pixel(x + 1, y +
+                1), new Pixel(x, y)};
     }
 
     public Pixel[] getPixel() {//��дgetPixel����
@@ -57,7 +62,8 @@ public class Enemy2 extends Enemy {
     public int isShot(ArrayList<Bullet> bullets) {
         for (int i = 0; i < plane[status].length; i++) {
             for (int j = 0; j < bullets.size(); j++) {
-                if ((bullets.get(j).x == plane[status][i].x) && (bullets.get(j).y == plane[status][i].y)) {
+                if ((bullets.get(j).x == plane[status][i].x) && (bullets.get(j).y ==
+                        plane[status][i].y)) {
                     return j;
                 }
             }

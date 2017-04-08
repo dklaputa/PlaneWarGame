@@ -1,6 +1,8 @@
 package com.myGame.thunder;
 
 
+import static com.myGame.thunder.Orientation.*;
+
 public abstract class Enemy extends Plane {
     public Enemy(int x, int y) {
         this.x = x;
@@ -9,38 +11,38 @@ public abstract class Enemy extends Plane {
 
     public void move(int orientation) {
         switch (orientation) {
-            case 0:
+            case LEFT:
                 x--;
                 refreshPixels();
                 break;
-            case 1:
+            case RIGHT:
                 x++;
                 refreshPixels();
                 break;
-            case 2:
+            case UP:
                 y--;
                 refreshPixels();
                 break;
-            case 3:
+            case DOWN:
                 y++;
                 refreshPixels();
                 break;
-            case 4:
+            case LEFTUP:
                 x--;
                 y--;
                 refreshPixels();
                 break;
-            case 5:
+            case RIGHTUP:
                 x++;
                 y--;
                 refreshPixels();
                 break;
-            case 6:
+            case RIGHTDOWN:
                 x++;
                 y++;
                 refreshPixels();
                 break;
-            case 7:
+            case LEFTDOWN:
                 x--;
                 y++;
                 refreshPixels();

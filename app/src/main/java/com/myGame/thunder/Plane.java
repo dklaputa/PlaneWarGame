@@ -2,6 +2,8 @@ package com.myGame.thunder;
 
 import java.util.ArrayList;
 
+import static com.myGame.thunder.Orientation.*;
+
 
 public abstract class Plane {
     int x;
@@ -13,31 +15,31 @@ public abstract class Plane {
 
     public void move(int orientation) {
         switch (orientation) {
-            case 0:
+            case LEFT:
                 if (x > 1) {
                     x--;
                     refreshPixels();
                 }
                 break;
-            case 1:
+            case RIGHT:
                 if (x < 23) {
                     x++;
                     refreshPixels();
                 }
                 break;
-            case 2:
+            case UP:
                 if (y > 0) {
                     y--;
                     refreshPixels();
                 }
                 break;
-            case 3:
+            case DOWN:
                 if (y < 23) {
                     y++;
                     refreshPixels();
                 }
                 break;
-            case 4:
+            case LEFTUP:
                 if (x > 1 && y > 0) {
                     x--;
                     y--;
@@ -50,7 +52,7 @@ public abstract class Plane {
                     refreshPixels();
                 }
                 break;
-            case 5:
+            case RIGHTUP:
                 if (x < 23 && y > 0) {
                     x++;
                     y--;
@@ -63,7 +65,7 @@ public abstract class Plane {
                     refreshPixels();
                 }
                 break;
-            case 6:
+            case RIGHTDOWN:
                 if (x < 23 && y < 23) {
                     x++;
                     y++;
@@ -76,7 +78,7 @@ public abstract class Plane {
                     refreshPixels();
                 }
                 break;
-            case 7:
+            case LEFTDOWN:
                 if (x > 1 && y < 23) {
                     x--;
                     y++;

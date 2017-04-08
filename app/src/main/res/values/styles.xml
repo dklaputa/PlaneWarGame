@@ -19,6 +19,6 @@
     </style>
 
     <style name="ButtonTextAppearance" parent="TextAppearance.AppCompat.Widget.Button">
-        <item name="android:fontFamily">casual</item>
+        <item name="android:fontFamily">cursive</item>
     </style>
 </resources>
