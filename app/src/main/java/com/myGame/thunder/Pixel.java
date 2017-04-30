@@ -42,7 +42,7 @@ public class Pixel {
     }
 
     public RectF getRect() {
-
+        if (isOutOfFrame()) return null;
         return rectTable[x][y];
     }
 

@@ -156,6 +156,7 @@ public class MainActivity extends AppCompatActivity {
                         task.cancel();
 
                         paused = true;
+
                         //			TouchEnable=false;
                         break;
                     case MotionEvent.ACTION_DOWN:

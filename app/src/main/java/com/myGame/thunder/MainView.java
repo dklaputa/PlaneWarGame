@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -115,7 +116,8 @@ public class MainView extends View {
 
     public void drawBullet(Paint paint, Canvas canvas, ArrayList<Bullet> bullets) {
         for (int i = 0; i < bullets.size(); i++) {
-            canvas.drawRect(bullets.get(i).getRect(), paint);
+            RectF rectF = bullets.get(i).getRect();
+            if (rectF != null) canvas.drawRect(rectF, paint);
         }
     }
 
